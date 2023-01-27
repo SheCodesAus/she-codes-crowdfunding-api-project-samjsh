@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Project
-from .serializers import ProjectSerializer
+from .models import Project, Pledge #, Pledge added from DRF doc 2
+from .serializers import ProjectSerializer, PledgeSerializer #, PledgeSerializer added from DRF doc 2
 from django.http import Http404
-from rest_framework import status
+from rest_framework import status, generics #, generics added from DRF doc 2
 
 #Create your views here
 class ProjectDetail(APIView):
@@ -43,4 +43,8 @@ class ProjectList(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-        
+
+#New class added from DRF doc 2
+class PledgeList(generics.ListCreateAPIView):
+	queryset = Pledge.objects.all()
+	serializer_class = PledgeSerializer

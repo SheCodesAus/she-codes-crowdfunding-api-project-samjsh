@@ -1,6 +1,6 @@
 # All of the below has been created by me
 from rest_framework import serializers
-from .models import Project
+from .models import Project, Pledge #, Pledge added from DRF doc 2
 
 
 class ProjectSerializer(serializers.Serializer):
@@ -15,3 +15,9 @@ class ProjectSerializer(serializers.Serializer):
 	
 	def create(self, validated_data):
 		return Project.objects.create(**validated_data)
+
+#new addition from DRF doc 2
+class PledgeSerializer(serializers.ModelSerializer):
+	class Meta:
+            model = Pledge
+            fields = ['id', 'amount', 'comment', 'anonymous', 'project', 'supporter']
