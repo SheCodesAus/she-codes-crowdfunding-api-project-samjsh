@@ -2,9 +2,10 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Project, Pledge #, Pledge added from DRF doc 2
-from .serializers import ProjectSerializer, PledgeSerializer #, PledgeSerializer added from DRF doc 2
+from .serializers import ProjectSerializer, PledgeSerializer, ProjectDetailSerializer #last two words added from DRF doc 2
 from django.http import Http404
 from rest_framework import status, generics #, generics added from DRF doc 2
+from .models import Pledge #added
 
 #Create your views here
 class ProjectDetail(APIView):
@@ -17,7 +18,7 @@ class ProjectDetail(APIView):
 
     def get(self, request, pk):
         project = self.get_object(pk) 
-        serializer = ProjectSerializer(project) 
+        serializer = ProjectDetailSerializer(project) #amended ProjectSerializer to ProjectDetailSerializer from DRF doc 2
         return Response(serializer.data) 
 
 class ProjectList(APIView):
