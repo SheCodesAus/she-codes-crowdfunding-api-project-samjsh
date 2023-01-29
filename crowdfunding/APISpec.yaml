@@ -1,0 +1,364 @@
+openapi: 3.0.2
+info:
+  title: 'CrowdFunding Project'
+  version: '1'
+paths:
+  /projects/:
+    get:
+      operationId: listProjects
+      description: 'list the current projects'
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                $ref: '#/components/schemas/Project'
+          description: 'the list of projects'
+      tags:
+      - projects
+    post:
+      operationId: createProjectList
+      description: 'create projects'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Project'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Project'
+          description: 'the created project'
+      tags:
+      - projects
+  /projects/{id}/:
+    get:
+      operationId: retrieveProjectDetail
+      description: 'retrieve the details of a project'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: 'id of the project'
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: 'the project that has been retrieved with the given id'
+      tags:
+      - projects
+    put:
+      operationId: updateProjectDetail
+      description: 'update an existing project'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: 'id of the project to be updated'
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Project'
+          description: 'the updated project'
+      tags:
+      - projects
+  /pledges/:
+    get:
+      operationId: listPledges
+      description: 'retrieve all pledges for a project'
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pledge'
+          description: 'the pledges'
+      tags:
+      - pledges
+    post:
+      operationId: createPledge
+      description: 'create a pledge for a project'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pledge'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pledge'
+          description: 'the created pledge'
+      tags:
+      - pledges
+  /comments/:
+    get:
+      operationId: listComments
+      description: 'show all comments'
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                $ref: '#/components/schemas/Comment'
+          description: 'the list of comments'
+      tags:
+      - comments
+    post:
+      operationId: createCommentList
+      description: 'create a new comment'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: 'the created comment'
+      tags:
+      - comments
+  /comments/{id}/:
+    get:
+      operationId: retrieveCommentDetail
+      description: 'get comment'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: 'the id of the comment to be retrieved'
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: 'the retrieved comment'
+      tags:
+      - comments
+    put:
+      operationId: updateCommentDetail
+      description: 'update a comment'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: 'id of the comment to be updated'
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Comment'
+          description: 'the updated comment'
+      tags:
+      - comments
+  /users/:
+    get:
+      operationId: listCustomUsers
+      description: 'get all users'
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                $ref: '#/components/schemas/User'
+          description: 'the list of users'
+      tags:
+      - users
+    post:
+      operationId: createCustomUserList
+      description: 'create a user'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/User'
+          description: 'the created user'
+      tags:
+      - users
+  /users/{id}/:
+    get:
+      operationId: retrieveCustomUserDetail
+      description: 'get a user'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: 'the id of the user'
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/User'
+          description: 'the retireved user'
+      tags:
+      - users
+  /api-token-auth/:
+    post:
+      operationId: createAuthToken
+      description: 'create a temporary auth token'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+          description: 'the temporary auth token'
+      tags:
+      - api-token-auth
+components:
+  schemas:
+    Pledge:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        amount:
+          type: integer
+        comment:
+          type: string
+          maxLength: 200
+        anonymous:
+          type: boolean
+        project:
+          type: integer
+        supporter:
+          type: string
+          readOnly: true
+      required:
+      - amount
+      - comment
+      - anonymous
+      - project
+    AuthToken:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        token:
+          type: string
+          readOnly: true
+      required:
+      - username
+      - password
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        title:
+          type: string
+        description:
+          type: string
+        goal:
+          type: integer
+        image:
+          type: string
+        is_open:
+          type: boolean
+        date_created:
+          type: string
+        owner:
+          type: integer
+      required:
+      - title
+      - description
+      - goal
+      - image
+      - is_open
+      - date_created
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        project:
+          type: string
+        content:
+          type: string
+        created_at:
+          type: string
+        author:
+          type: integer
+      required:
+      - project
+      - content
+      - created_at
+      - author
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        username:
+          type: string
+        email:
+          type: string
+      required:
+      - username
+      - email
