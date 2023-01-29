@@ -53,7 +53,7 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = 'users.CustomUser' #added most recent
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware', #added from deployment doc
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware', #added from deployment doc
     'django.contrib.sessions.middleware.SessionMiddleware',
