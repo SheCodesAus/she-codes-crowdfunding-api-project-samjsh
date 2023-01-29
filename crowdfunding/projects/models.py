@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model #added from users doc
 from django.db import models
+from django.contrib.auth.models import User #added for comments
 
 User = get_user_model() #added from users doc
 
@@ -32,3 +33,15 @@ class Pledge(models.Model):
         on_delete=models.CASCADE,
         related_name='supporter_pledges'
     )
+
+#below block added for comments
+class Comment(models.Model):
+    author = models.ForeignKey( 
+        User,
+        on_delete=models.CASCADE,
+        related_name='owner_comment'
+    )
+    project = models.TextField()
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    

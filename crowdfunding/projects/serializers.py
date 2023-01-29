@@ -1,6 +1,6 @@
 # All of the below has been created by me
 from rest_framework import serializers
-from .models import Project, Pledge #, Pledge added from DRF doc 2
+from .models import Project, Pledge, Comment #, Pledge added from DRF doc 2
 
 class ProjectSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
@@ -24,8 +24,21 @@ class ProjectSerializer(serializers.Serializer):
         instance.save()
         return instance
 
-def create(self, validated_data):
-    return Project.objects.create(**validated_data)
+    def create(self, validated_data):
+        return Project.objects.create(**validated_data)
+
+
+
+class CommentSerializer(serializers.Serializer):
+    id = serializers.ReadOnlyField()
+    project = serializers.CharField(max_length=200)
+    content = serializers.CharField(max_length=200)
+    created_at = serializers.DateTimeField()
+    author = serializers.ReadOnlyField(source='owner.id') 
+
+
+    def create(self, validated_data):
+        return Comment.objects.create(**validated_data)
 
 #new addition from DRF doc 2
 class PledgeSerializer(serializers.ModelSerializer):
@@ -37,3 +50,4 @@ class PledgeSerializer(serializers.ModelSerializer):
 #Added from DRF doc 2
 class ProjectDetailSerializer(ProjectSerializer):
     pledges = PledgeSerializer(many=True, read_only=True)
+    
