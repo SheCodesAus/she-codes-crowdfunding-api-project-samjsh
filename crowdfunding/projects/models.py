@@ -11,7 +11,7 @@ class Project(models.Model):
     goal = models.IntegerField()
     image = models.URLField()
     is_open = models.BooleanField()
-    date_created = models.DateTimeField()
+    date_created = models.DateTimeField(auto_now_add=True) ###added
     owner = models.ForeignKey( #from ownder, added from users doc
         User,
         on_delete=models.CASCADE,
@@ -20,7 +20,7 @@ class Project(models.Model):
     
 #new model added from DRF sheet 2
 class Pledge(models.Model):
-    amount = models.IntegerField()
+    pledge_amount = models.IntegerField()
     comment = models.CharField(max_length=200)
     anonymous = models.BooleanField()
     project = models.ForeignKey(
@@ -36,12 +36,15 @@ class Pledge(models.Model):
 
 #below block added for comments
 class Comment(models.Model):
+    title = models.CharField(max_length=100, null=True, blank=True) ####added
     author = models.ForeignKey( 
         User,
         on_delete=models.CASCADE,
         related_name='owner_comment'
     )
     project = models.TextField()
-    content = models.TextField()
+    content = models.TextField(blank=True, null=True) ###added
     created_at = models.DateTimeField(auto_now_add=True)
+    commentee = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='commentee_comment') ###added
     
